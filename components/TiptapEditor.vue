@@ -11,7 +11,7 @@ import TableRow from '@tiptap/extension-table-row'
 import IconItem from './IconItem'
 import {getIconItems} from 'assets/article'
 
-const idleInterval = 5000
+const idleIntervalMs = 5000
 
 export default {
   components: {
@@ -27,16 +27,14 @@ export default {
   }),
   mounted() {
     const that = this
-    // this.savedHtml = Html
     this.editor = new Editor({
       content: Html,
       onUpdate() {
-        // this.idleInterval
-        if (this.idleInterval) {
-          clearTimeout(this.idleInterval)
-        }
         that.first = false
-        this.idleInterval = setTimeout(() => that.save(), idleInterval)
+        if (that.idleInterval) {
+          clearTimeout(that.idleInterval)
+        }
+        that.idleInterval = setTimeout(() => that.save(), idleIntervalMs)
       },
       extensions: [
         StarterKit,
